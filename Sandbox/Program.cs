@@ -12,14 +12,13 @@ namespace Sandbox
 
     public class Game : Application
     {
-        public Game() : base(new WindowSettings { Title = "Test Window", Size = new Vector2Int(500, 500), Fullscreen = false, BackgroundColor = Color.White })
+        public Game() : base(new WindowSettings { Title = "Test Window", Size = new Vector2Int(500, 500), Fullscreen = false, BackgroundColor = Color.White, CursorVisible = true })
         {
 
         }
 
         protected override void OnStart()
         {
-
         }
 
         protected override void OnUpdate()

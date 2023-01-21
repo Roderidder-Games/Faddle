@@ -2,8 +2,11 @@
 
 namespace FaddleEngine
 {
+    [LogName("Application")]
     public abstract class Application
     {
+        public static Vector2Int WindowSize { get; internal set; }
+
         internal static Application _instance;
         internal static Application Instance
         {
@@ -26,6 +29,8 @@ namespace FaddleEngine
             }
         }
 
+        internal ObjectManager objectManager;
+
         /// <summary>
         /// Creates a new application.
         /// </summary>
@@ -33,6 +38,8 @@ namespace FaddleEngine
         public Application(WindowSettings windowSettings)
         {
             Instance = this;
+
+            objectManager = new ObjectManager();
 
             using (Window window = new Window(windowSettings))
             {
@@ -48,6 +55,7 @@ namespace FaddleEngine
 
         internal void Update()
         {
+            objectManager.Update();
             OnUpdate();
         }
 
@@ -55,6 +63,17 @@ namespace FaddleEngine
         /// Executes every frame.
         /// </summary>
         protected abstract void OnUpdate();
+
+        internal void Render()
+        {
+            objectManager.OnRender();
+            OnRender();
+        }
+
+        protected virtual void OnRender()
+        {
+
+        }
 
         /// <summary>
         /// Exits the application.

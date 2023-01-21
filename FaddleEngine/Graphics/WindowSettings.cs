@@ -21,5 +21,9 @@
         /// The background color of the window.
         /// </summary>
         public Color BackgroundColor;
+        /// <summary>
+        /// Is the cursot visible?
+        /// </summary>
+        public bool CursorVisible;
     }
 }

@@ -6,9 +6,32 @@ namespace FaddleEngine
     {
         private static KeyboardState keyboard;
 
+        private readonly static bool[] mouseButtonsHeld = new bool[5];
+        private readonly static bool[] mouseButtonsDown = new bool[5];
+        private readonly static bool[] mouseButtonsUp = new bool[5];
+
+        internal static void Clear()
+        {
+            for (int i = 0; i < mouseButtonsDown.Length; i++)
+            {
+                mouseButtonsDown[i] = mouseButtonsUp[i] = false;
+            }
+        }
+
         internal static void Update(KeyboardState keyboard)
         {
             Input.keyboard = keyboard;
+        }
+
+        internal static void MouseButtonDown(MouseButton button)
+        {
+            mouseButtonsHeld[(int)button] = mouseButtonsDown[(int)button] = true;
+        }
+
+        internal static void MouseButtonUp(MouseButton button)
+        {
+            mouseButtonsHeld[(int)button] = false;
+            mouseButtonsUp[(int)button] = true;
         }
 
         /// <summary>
@@ -29,5 +52,24 @@ namespace FaddleEngine
         /// <param name="key">The key to check for.</param>
         /// <returns></returns>
         public static bool GetKeyUp(Key key) => keyboard.IsKeyReleased((Keys)key);
+
+        /// <summary>
+        /// Checks if a mouse button is held down this frame.
+        /// </summary>
+        /// <param name="button">The mouse button to check for.</param>
+        /// <returns></returns>
+        public static bool GetMouseButton(Mouse button) => mouseButtonsHeld[(int)button];
+        /// <summary>
+        /// Checks if a mouse button was started being held down this frame.
+        /// </summary>
+        /// <param name="button">The mouse button to check for.</param>
+        /// <returns></returns>
+        public static bool GetMouseButtonDown(Mouse button) => mouseButtonsDown[(int)button];
+        /// <summary>
+        /// Checks if a mouse button was released this frame.
+        /// </summary>
+        /// <param name="button">The mouse button to check for.</param>
+        /// <returns></returns>
+        public static bool GetMouseButtonUp(Mouse button) => mouseButtonsUp[(int)button];
     }
 }
