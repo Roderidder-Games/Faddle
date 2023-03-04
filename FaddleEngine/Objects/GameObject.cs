@@ -1,5 +1,7 @@
 ﻿using FaddleEngine.Events;
+using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace FaddleEngine
 {
@@ -8,10 +10,10 @@ namespace FaddleEngine
         public readonly string name;
         public readonly Transform transform;
 
-        private readonly List<Component> components = new List<Component>();
+        private readonly List<Component> components = new();
 
-        private readonly FaddleEvent onRender = new FaddleEvent();
-        private readonly FaddleEvent onUpdate = new FaddleEvent();
+        private readonly FaddleEvent onRender = new();
+        private readonly FaddleEvent onUpdate = new();
 
         #region CONSTRUCTORS
 
@@ -62,6 +64,53 @@ namespace FaddleEngine
             Application.Instance.objectManager.Add(this);
         }
 
+        public GameObject(Scene scene)
+        {
+            this.name = "GameObject";
+            transform = Transform.Zero;
+            AddComponent(transform);
+            scene.Add(this);
+        }
+
+        public GameObject(string name, Scene scene)
+        {
+            this.name = name;
+            transform = Transform.Zero;
+            AddComponent(transform);
+            scene.Add(this);
+        }
+
+        public GameObject(Transform transform, Scene scene)
+        {
+            this.name = "GameObject";
+            this.transform = transform;
+            scene.Add(this);
+        }
+
+        public GameObject(string name, Transform transform, Scene scene)
+        {
+            this.name = name;
+            this.transform = transform;
+            AddComponent(transform);
+            scene.Add(this);
+        }
+
+        public GameObject(Vector3 position, Vector3 rotation, Vector3 scale, Scene scene)
+        {
+            this.name = "GameObject";
+            transform = new Transform(position, rotation, scale);
+            AddComponent(transform);
+            scene.Add(this);
+        }
+
+        public GameObject(string name, Vector3 position, Vector3 rotation, Vector3 scale, Scene scene)
+        {
+            this.name = name;
+            transform = new Transform(position, rotation, scale);
+            AddComponent(transform);
+            scene.Add(this);
+        }
+
         #endregion
 
         #region INTERNAL METHODS
@@ -76,6 +125,11 @@ namespace FaddleEngine
             onUpdate.Fire();
         }
 
+        internal void Dispose()
+        {
+            components.ForEach((c) => c.OnRemove());
+        }
+
         #endregion
 
         #region COMPONENT LOGIC
@@ -84,12 +138,21 @@ namespace FaddleEngine
         {
             if (components.Find((c) => c.GetType() == component.GetType()) == null)
             {
+                RequireComponentAttribute attrib = component.GetType().GetCustomAttribute<RequireComponentAttribute>();
+                if (attrib != null)
+                {
+                    if (!TryGetComponent(attrib.type, out _))
+                    {
+                        Log.Error($"Missing {attrib.type.Name} component on {name}!");
+                    }
+                }
+
                 components.Add(component);
                 if (component.AddParent(this))
                 {
                     onUpdate.AddListener(component.OnUpdate);
                     onRender.AddListener(component.OnRender);
-                    component.OnInit();
+                    component.OnAdd();
                     return true;
                 }
                 return false;
@@ -104,7 +167,7 @@ namespace FaddleEngine
             }
         }
 
-        public bool TryRemoveComponent<T>(out Component component) where T : Component
+        public bool TryRemoveComponent<T>() where T : Component
         {
             Component c = components.Find((c) => c.GetType() == typeof(T));
 
@@ -113,18 +176,16 @@ namespace FaddleEngine
                 c.OnRemove();
                 onUpdate.RemoveListener(c.OnUpdate);
                 c.RemoveParent();
-                component = c;
                 components.Remove(c);
                 return true;
             }
             else
             {
-                component = null;
                 return false;
             }
         }
 
-        public Component GetComponent<T>() where T : Component => components.Find((c) => c.GetType() == typeof(T));
+        public T GetComponent<T>() where T : Component => (T)components.Find((c) => c.GetType() == typeof(T));
         public bool TryGetComponent<T>(out Component component) where T : Component
         {
             Component c = components.Find((c) => c.GetType() == typeof(T));
@@ -141,6 +202,28 @@ namespace FaddleEngine
             }
         }
 
+        public bool TryGetComponent(Type type, out Component component)
+        {
+            Component c = components.Find((c) => c.GetType() == type);
+
+            if (c != null)
+            {
+                component = c;
+                return true;
+            }
+            else
+            {
+                component = null;
+                return false;
+            }
+        }
+
         #endregion
+
+        public void Unload()
+        {
+            components.ForEach((c) => c.OnRemove());
+            Application.Instance.objectManager.Remove(this);
+        }
     }
 }

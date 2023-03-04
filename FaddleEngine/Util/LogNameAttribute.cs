@@ -1,6 +1,6 @@
 ﻿namespace FaddleEngine
 {
-    [System.AttributeUsage(System.AttributeTargets.All, Inherited = false, AllowMultiple = true)]
+    [System.AttributeUsage(System.AttributeTargets.All, Inherited = false, AllowMultiple = false)]
     public sealed class LogNameAttribute : System.Attribute
     {
         private readonly string name;

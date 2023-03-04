@@ -1,4 +1,6 @@
 ﻿using FaddleEngine;
+using FaddleEngine.Graphics;
+using PolcompballFighter.Player;
 
 namespace Sandbox
 {
@@ -6,27 +8,32 @@ namespace Sandbox
     {
         static void Main()
         {
-            new Game();
+            _ = new Game();
         }
+    }
+
+    public class TestScene : Scene
+    {
+
     }
 
     public class Game : Application
     {
-        public Game() : base(new WindowSettings { Title = "Test Window", Size = new Vector2Int(500, 500), Fullscreen = false, BackgroundColor = Color.White, CursorVisible = true })
+        public Game() : base(new WindowSettings { Title = "PolCompBall Fighters", Size = new Vector2Int(500, 500), Fullscreen = false, BackgroundColor = Color.White, CursorVisible = false })
         {
 
         }
 
         protected override void OnStart()
         {
+            _ = new Camera(Vector3.UnitZ * 3, WindowSize.x / (float)WindowSize.y)
+            {
+                Yaw = -90f
+            };
         }
 
         protected override void OnUpdate()
         {
-            if (Input.GetKeyDown(Key.Escape))
-            {
-                Quit();
-            }
         }
     }
 }

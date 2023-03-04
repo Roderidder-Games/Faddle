@@ -6,11 +6,14 @@ namespace FaddleEngine.Events
     {
         public delegate void EventListener();
 
-        private readonly List<EventListener> listeners = new List<EventListener>();
+        private readonly List<EventListener> listeners = new();
 
         public void AddListener(EventListener listener)
         {
-            listeners.Add(listener);
+            if (!listeners.Contains(listener))
+            {
+                listeners.Add(listener);
+            }
         }
 
         public void RemoveListener(EventListener listener)
@@ -28,7 +31,7 @@ namespace FaddleEngine.Events
     {
         public delegate void EventListener(T arg1);
 
-        private readonly List<EventListener> listeners = new List<EventListener>();
+        private readonly List<EventListener> listeners = new();
 
         public void AddListener(EventListener listener)
         {
@@ -45,7 +48,7 @@ namespace FaddleEngine.Events
     {
         public delegate void EventListener(T1 arg1, T2 arg2);
 
-        private readonly List<EventListener> listeners = new List<EventListener>();
+        private readonly List<EventListener> listeners = new();
 
         public void AddListener(EventListener listener)
         {

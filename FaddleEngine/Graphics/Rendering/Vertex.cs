@@ -39,21 +39,6 @@ namespace FaddleEngine.Graphics
         }
     }
 
-    public readonly struct Vertex2D
-    {
-        public static readonly VertexInfo VertexInfo = new VertexInfo(
-            typeof(Vertex2D),
-            new VertexAttribute("Position", 0, 2, 0)
-        );
-
-        public readonly Vector2 position;
-
-        public Vertex2D(Vector2 position)
-        {
-            this.position = position;
-        }
-    }
-
     public readonly struct Vertex
     {
         public static readonly VertexInfo VertexInfo = new VertexInfo(
@@ -66,23 +51,6 @@ namespace FaddleEngine.Graphics
         public readonly Vector2 texCoord;
 
         public Vertex(Vector3 position, Vector2 texCoord)
-        {
-            this.position = position;
-            this.texCoord = texCoord;
-        }
-    }
-
-    public readonly struct Texture2D
-    {
-        public static readonly VertexInfo VertexInfo = new VertexInfo(
-            typeof(Texture2D),
-            new VertexAttribute("Position", 0, 2, 0),
-            new VertexAttribute("TexCoord", 1, 2, 2 * sizeof(float))
-        );
-
-        public readonly Vector2 position, texCoord;
-
-        public Texture2D(Vector2 position, Vector2 texCoord)
         {
             this.position = position;
             this.texCoord = texCoord;

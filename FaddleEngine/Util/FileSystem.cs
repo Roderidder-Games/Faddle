@@ -14,7 +14,18 @@ namespace FaddleEngine
         {
             string filePath = ToResourcePath(path);
 
-            return File.ReadAllText(filePath);
+            try
+            {
+                using (StreamReader reader = new(new FileStream(filePath, FileMode.Open, FileAccess.Read)))
+                {
+                    return reader.ReadToEnd();
+                };
+            }
+            catch (FileNotFoundException e)
+            {
+                Log.Error(e);
+                return null;
+            }
         }
     }
 }

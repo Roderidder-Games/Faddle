@@ -1,5 +1,4 @@
 ﻿using OpenTK.Graphics.OpenGL4;
-using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
@@ -11,12 +10,6 @@ namespace FaddleEngine.Graphics
         private static Window window;
 
         private WindowSettings settings;
-
-        private VertexBuffer vbo;
-        private IndexBuffer ebo;
-        private VertexArrayObject vao;
-
-        private Texture texture;
 
         public Window(WindowSettings settings) : base(
             new GameWindowSettings { RenderFrequency = 60f, UpdateFrequency = 60f },
@@ -41,35 +34,15 @@ namespace FaddleEngine.Graphics
 
             IsVisible = true;
 
-            CursorState = settings.CursorVisible ? CursorState.Normal : CursorState.Hidden;
+            CursorState = settings.CursorVisible ? CursorState.Normal : CursorState.Grabbed;
+            if (!settings.CursorVisible)
+            {
+                MousePosition = new Vector2(0, 0);
+            }
 
             GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
             GL.Enable(EnableCap.Blend);
-
-            Vertex[] vertices = new Vertex[]
-            {
-                new Vertex(new Vector3(-0.5f, -0.5f, 0f), new Vector2(0f, 0f)),
-                new Vertex(new Vector3(-0.5f, 0.5f, 0f), new Vector2(0f, 1f)),
-                new Vertex(new Vector3(0.5f, -0.5f, 0f), new Vector2(1f, 0f)),
-                new Vertex(new Vector3(0.5f, 0.5f, 0f), new Vector2(1f, 1f))
-            };
-
-            vbo = new VertexBuffer(Vertex.VertexInfo, 4, true);
-            vbo.SetData(vertices, vertices.Length);
-
-            vao = new VertexArrayObject(vbo);
-
-            int[] indices = new int[]
-            {
-                0, 1, 3,
-                0, 3, 2
-            };
-
-            ebo = new IndexBuffer(6, true);
-            ebo.SetData(indices, indices.Length);
-
-            texture = new Texture("Textures/HIVE.png");
-            texture.Use(TextureUnit.Texture0);
+            GL.Enable(EnableCap.DepthTest);
         }
 
         protected override void OnResize(ResizeEventArgs e)
@@ -84,24 +57,9 @@ namespace FaddleEngine.Graphics
             base.OnRenderFrame(args);
 
             GL.ClearColor(settings.BackgroundColor);
-            GL.Clear(ClearBufferMask.ColorBufferBit);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            vao.Use();
-
-            Matrix4 transform = Matrix4.Identity;
-
-            transform *= Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(20f));
-
-            transform *= Matrix4.CreateScale(1.1f);
-
-            transform *= Matrix4.CreateTranslation(0.1f, 0.1f, 0f);
-
-            Shader.DEFAULT.Use();
-
-            texture.Use(TextureUnit.Texture0);
-            Shader.DEFAULT.SetUniform("transform", transform);
-
-            ebo.Use();
+            PackageManager.OnRender();
 
             Application.Instance.Render();
 
@@ -117,7 +75,12 @@ namespace FaddleEngine.Graphics
                 CursorState = CursorState.Normal;
             }
 
+            Application.DeltaTime = (float)args.Time;
+
             Input.Update(KeyboardState);
+            Input.UpdateMousePos(MouseState.Position);
+
+            PackageManager.OnUpdate();
 
             Application.Instance.Update();
 
@@ -130,7 +93,7 @@ namespace FaddleEngine.Graphics
 
             if (!settings.CursorVisible && e.Button == MouseButton.Left)
             {
-                CursorState = CursorState.Hidden;
+                CursorState = CursorState.Grabbed;
             }
 
             Input.MouseButtonDown(e.Button);
@@ -149,7 +112,7 @@ namespace FaddleEngine.Graphics
 
             if (!settings.CursorVisible && e.IsFocused)
             {
-                CursorState = CursorState.Hidden;
+                CursorState = CursorState.Grabbed;
             }
         }
 
@@ -159,14 +122,10 @@ namespace FaddleEngine.Graphics
 
             Shader.DEFAULT.Dispose();
 
-            vbo.Dispose();
-            vao.Dispose();
-            ebo.Dispose();
-
-            texture.Dispose();
+            PackageManager.OnQuit();
         }
 
-        public static Vector2Int GetSize() => new Vector2Int(window.Size.X, window.Size.Y);
+        public static Vector2Int GetSize() => new(window.Size.X, window.Size.Y);
 
         public static void Quit() => window.Close();
     }

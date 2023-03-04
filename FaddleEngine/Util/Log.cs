@@ -20,6 +20,7 @@ namespace FaddleEngine
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Write(message, sender);
+            Application.Quit();
         }
 
         private static void Write(object message)

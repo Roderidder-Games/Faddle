@@ -35,7 +35,7 @@ namespace FaddleEngine.Graphics
     public class Shader
     {
         public readonly int handle;
-        public static Shader DEFAULT => new Shader("Shaders/Default.vert", "Shaders/Default.frag");
+        public static Shader DEFAULT => new("Default/Shaders/Texture.vert", "Default/Shaders/Texture.frag");
 
         private readonly ShaderUniform[] uniforms;
         private readonly ShaderAttribute[] attributes;
@@ -91,14 +91,14 @@ namespace FaddleEngine.Graphics
             attributes = CreateAttributeList(handle);
         }
 
-        public void Use()
+        internal void Use()
         {
             GL.UseProgram(handle);
         }
 
         #region SET UNIFORM
 
-        internal void SetUniform(string name, int v)
+        public void SetUniform(string name, int v)
         {
             if (!GetShaderUniform(name, out ShaderUniform uniform))
             {
@@ -110,13 +110,11 @@ namespace FaddleEngine.Graphics
                 Log.Error($"Type of uniform {name} is not int.");
             }
 
-            Use();
             GL.Uniform1(uniform.location, v);
-            GL.UseProgram(0);
         }
 
 
-        internal void SetUniform(string name, float v)
+        public void SetUniform(string name, float v)
         {
             if (!GetShaderUniform(name, out ShaderUniform uniform))
             {
@@ -128,12 +126,10 @@ namespace FaddleEngine.Graphics
                 Log.Error($"Type of uniform {name} is not float.");
             }
 
-            Use();
             GL.Uniform1(uniform.location, v);
-            GL.UseProgram(0);
         }
 
-        internal void SetUniform(string name, Vector2 v)
+        public void SetUniform(string name, Vector2 v)
         {
             if (!GetShaderUniform(name, out ShaderUniform uniform))
             {
@@ -145,12 +141,25 @@ namespace FaddleEngine.Graphics
                 Log.Error($"Type of uniform {name} is not Vector2.");
             }
 
-            Use();
             GL.Uniform2(uniform.location, v);
-            GL.UseProgram(0);
         }
 
-        internal void SetUniform(string name, Matrix4 v)
+        public void SetUniform(string name, Color c)
+        {
+            if (!GetShaderUniform(name, out ShaderUniform uniform))
+            {
+                Log.Error($"Could not find uniform {name}.");
+            }
+
+            if (uniform.type != ActiveUniformType.FloatVec4)
+            {
+                Log.Error($"Type of uniform {name} is not Vector2.");
+            }
+
+            GL.Uniform4(uniform.location, (Color4)c);
+        }
+
+        public void SetUniform(string name, Matrix4 v)
         {
             if (!GetShaderUniform(name, out ShaderUniform uniform))
             {
@@ -162,9 +171,7 @@ namespace FaddleEngine.Graphics
                 Log.Error($"Type of uniform {name} is not Matrix4.");
             }
 
-            Use();
             GL.UniformMatrix4(uniform.location, true, ref v);
-            GL.UseProgram(0);
         }
 
         private bool GetShaderUniform(string name, out ShaderUniform uniform)

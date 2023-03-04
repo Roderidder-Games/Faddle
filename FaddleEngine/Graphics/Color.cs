@@ -1,4 +1,5 @@
 ﻿using OpenTK.Mathematics;
+using System;
 
 namespace FaddleEngine
 {
@@ -17,10 +18,23 @@ namespace FaddleEngine
             this.a = a;
         }
 
-        public static Color White => new Color(1f, 1f, 1f, 1f);
-        public static Color Black => new Color(0f, 0f, 0f, 1f);
-        public static Color Transparent => new Color(0f, 0f, 0f, 0f);
+        public Color(byte r, byte g, byte b, byte a)
+        {
+            this.r = r / 255;
+            this.g = g / 255;
+            this.b = b / 255;
+            this.a = a / 255;
+        }
 
-        public static implicit operator Color4(Color c) => new Color4(c.r, c.g, c.b, c.a);
+        public static Color White => new(1f, 1f, 1f, 1f);
+        public static Color Black => new(0f, 0f, 0f, 1f);
+        public static Color Transparent => new(0f, 0f, 0f, 0f);
+
+        public static implicit operator Color4(Color c) => new(c.r, c.g, c.b, c.a);
+
+        public override string ToString()
+        {
+            return $"R: {r}, G: {g}, B: {b}, A: {a}";
+        }
     }
 }

@@ -22,7 +22,7 @@
         /// <summary>
         /// Called on the first frame on which the component inhabits the GameObject.
         /// </summary>
-        public abstract void OnInit();
+        public abstract void OnAdd();
         /// <summary>
         /// Called every frame the component has a parent GameObject.
         /// </summary>

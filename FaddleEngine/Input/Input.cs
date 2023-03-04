@@ -6,6 +6,8 @@ namespace FaddleEngine
     {
         private static KeyboardState keyboard;
 
+        public static Vector2 MousePos { get; private set; }
+
         private readonly static bool[] mouseButtonsHeld = new bool[5];
         private readonly static bool[] mouseButtonsDown = new bool[5];
         private readonly static bool[] mouseButtonsUp = new bool[5];
@@ -21,6 +23,11 @@ namespace FaddleEngine
         internal static void Update(KeyboardState keyboard)
         {
             Input.keyboard = keyboard;
+        }
+
+        internal static void UpdateMousePos(Vector2 mousePos)
+        {
+            MousePos = mousePos;
         }
 
         internal static void MouseButtonDown(MouseButton button)

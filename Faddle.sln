@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32602.291
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FaddleEngine", "FaddleEngine\FaddleEngine.csproj", "{8CDDD865-6C5E-43C4-87B1-29B481393965}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FaddleEngine", "FaddleEngine\FaddleEngine.csproj", "{8CDDD865-6C5E-43C4-87B1-29B481393965}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox", "Sandbox\Sandbox.csproj", "{E52EA246-BF8A-4CDB-BD61-5DAA8ADEE09A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PolcompballFighter", "Sandbox\PolcompballFighter.csproj", "{E52EA246-BF8A-4CDB-BD61-5DAA8ADEE09A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FaddleXR", "FaddleXR\FaddleXR.csproj", "{0CCE7495-49A4-4707-A143-B7DEF27D9B8C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{E52EA246-BF8A-4CDB-BD61-5DAA8ADEE09A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E52EA246-BF8A-4CDB-BD61-5DAA8ADEE09A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E52EA246-BF8A-4CDB-BD61-5DAA8ADEE09A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CCE7495-49A4-4707-A143-B7DEF27D9B8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CCE7495-49A4-4707-A143-B7DEF27D9B8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CCE7495-49A4-4707-A143-B7DEF27D9B8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CCE7495-49A4-4707-A143-B7DEF27D9B8C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

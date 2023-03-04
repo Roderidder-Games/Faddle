@@ -6,6 +6,7 @@ namespace FaddleEngine
     public abstract class Application
     {
         public static Vector2Int WindowSize { get; internal set; }
+        public static float DeltaTime { get; internal set; }
 
         internal static Application _instance;
         internal static Application Instance
@@ -41,7 +42,7 @@ namespace FaddleEngine
 
             objectManager = new ObjectManager();
 
-            using (Window window = new Window(windowSettings))
+            using (Window window = new(windowSettings))
             {
                 OnStart();
                 window.Run();
