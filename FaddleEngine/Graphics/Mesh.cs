@@ -8,10 +8,6 @@ namespace FaddleEngine.Graphics
         public int[] indices;
 
         public Texture texture;
-        public SpriteSheet spriteSheet;
-        public int spriteSheetIndex;
-
-        public bool usesSpriteSheet;
 
         public Mesh()
         {
@@ -40,14 +36,6 @@ namespace FaddleEngine.Graphics
         public void SetTexture(Texture texture)
         {
             this.texture = texture;
-            usesSpriteSheet = false;
-        }
-
-        public void SetTexture(SpriteSheet spriteSheet, int index)
-        {
-            this.spriteSheet = spriteSheet;
-            this.spriteSheetIndex = index;
-            usesSpriteSheet = true;
         }
 
         public static Mesh Cube =>

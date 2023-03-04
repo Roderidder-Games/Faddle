@@ -49,14 +49,7 @@ namespace FaddleEngine
             vao.Use();
 
             shader.Use();
-            if (mesh.usesSpriteSheet)
-            {
-                mesh.spriteSheet?.DrawSprite(Parent.transform, mesh, mesh.spriteSheetIndex);
-            } 
-            else
-            {
-                mesh.texture?.Use(OpenTK.Graphics.OpenGL4.TextureUnit.Texture0);
-            }
+            mesh.texture?.Use(OpenTK.Graphics.OpenGL4.TextureUnit.Texture0);
             shader.SetUniform("model", Parent.transform.Model);
             shader.SetUniform("view", Camera.Main.GetViewMatrix());
             shader.SetUniform("projection", Camera.Main.GetProjectionMatrix());
