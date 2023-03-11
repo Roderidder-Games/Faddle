@@ -1,15 +1,12 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using StbImageSharp;
-using System.Drawing.Imaging;
-using System.Drawing;
 using System.IO;
-using System.Runtime.InteropServices;
 using PixelFormat = OpenTK.Graphics.OpenGL4.PixelFormat;
 using FaddleEngine.Events;
 
-namespace FaddleEngine.Graphics
+namespace FaddleEngine
 {
-    public class Texture
+    public sealed class Texture
     {
         public readonly Vector2Int size;
 
@@ -94,7 +91,7 @@ namespace FaddleEngine.Graphics
         {
             if (texPixels == null)
             {
-                Apply();
+                InitializePixels();
             }
 
             for (int i = 0; i < texPixels.Length; i++)
@@ -108,8 +105,33 @@ namespace FaddleEngine.Graphics
             Apply();
         }
 
-        public void Apply()
+        private void Apply()
         {
+            GL.BindTexture(TextureTarget.Texture2D, handle);
+
+            byte[] data = new byte[(size.x * size.y) * 4];
+
+            int index = 0;
+
+            foreach (Color color in texPixels)
+            {
+                Vector4 bytes = color.ToBytes();
+
+                data[index] = (byte)bytes.x;
+                data[index + 1] = (byte)bytes.y;
+                data[index + 2] = (byte)bytes.z;
+                data[index + 3] = (byte)bytes.w;
+
+                index += 4;
+            }
+
+            GL.TexSubImage2D(TextureTarget.Texture2D, 0, 0, 0, size.x, size.y, PixelFormat.Rgba, PixelType.UnsignedByte, data);
+        }
+
+        private void InitializePixels()
+        {
+            GL.BindTexture(TextureTarget.Texture2D, handle);
+
             int fboId = GL.GenFramebuffer();
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, fboId);
             GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2D, handle, 0);
@@ -139,11 +161,11 @@ namespace FaddleEngine.Graphics
             onTexUpdate.Fire(this);
         }
 
-        public Color[] GetPixels(bool clearCache = false)
+        public Color[] GetPixels(bool clear = false)
         {
-            if (clearCache || texPixels == null)
+            if (clear || texPixels == null)
             {
-                Apply();
+                InitializePixels();
             }
 
             return texPixels;
@@ -151,6 +173,8 @@ namespace FaddleEngine.Graphics
 
         public Color[] GetPixels(Vector2Int start, Vector2Int dimensions)
         {
+            GL.BindTexture(TextureTarget.Texture2D, handle);
+
             int fboId = GL.GenFramebuffer();
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, fboId);
             GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2D, handle, 0);
@@ -178,6 +202,24 @@ namespace FaddleEngine.Graphics
             }
 
             return pixelsArray;
+        }
+
+        public void SetPixels(Vector2Int start, Vector2Int dimensions, Color[] pixels)
+        {
+            if (texPixels == null)
+            {
+                InitializePixels();
+            }
+
+            for (int y = 0; y < dimensions.y; y++) 
+            {
+                for (int x = 0; x < dimensions.x; x++)
+                {
+                    texPixels[(x + start.x) + (y + start.y) * size.x] = pixels[x + y * dimensions.x];
+                }
+            }
+
+            Apply();
         }
 
         public void Use(TextureUnit unit)

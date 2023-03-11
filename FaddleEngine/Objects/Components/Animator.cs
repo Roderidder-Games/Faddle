@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FaddleEngine
+﻿namespace FaddleEngine
 {
     [RequireComponent(typeof(MeshRenderer))]
-    public class Animator : Component
+    public sealed class Animator : Component
     {
         private Animation animation;
 

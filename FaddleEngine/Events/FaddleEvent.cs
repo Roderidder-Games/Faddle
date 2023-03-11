@@ -2,7 +2,7 @@
 
 namespace FaddleEngine.Events
 {
-    public class FaddleEvent
+    public sealed class FaddleEvent
     {
         public delegate void EventListener();
 
@@ -27,7 +27,7 @@ namespace FaddleEngine.Events
         }
     }
 
-    public class FaddleEvent<T>
+    public sealed class FaddleEvent<T>
     {
         public delegate void EventListener(T arg1);
 
@@ -44,7 +44,7 @@ namespace FaddleEngine.Events
         }
     }
 
-    public class FaddleEvent<T1, T2>
+    public sealed class FaddleEvent<T1, T2>
     {
         public delegate void EventListener(T1 arg1, T2 arg2);
 

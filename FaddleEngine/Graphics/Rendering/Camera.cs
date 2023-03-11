@@ -3,7 +3,7 @@ using System;
 
 namespace FaddleEngine
 {
-    public class Camera
+    public sealed class Camera
     {
         public static Camera Main { get; private set; }
 

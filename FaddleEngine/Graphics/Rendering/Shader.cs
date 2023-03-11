@@ -2,7 +2,7 @@
 using OpenTK.Mathematics;
 using System;
 
-namespace FaddleEngine.Graphics
+namespace FaddleEngine
 {
     internal readonly struct ShaderUniform
     {
@@ -32,7 +32,7 @@ namespace FaddleEngine.Graphics
         }
     }
 
-    public class Shader
+    public sealed class Shader
     {
         public readonly int handle;
         public static Shader DEFAULT => new("Default/Shaders/Texture.vert", "Default/Shaders/Texture.frag");
@@ -256,7 +256,9 @@ namespace FaddleEngine.Graphics
             GL.DeleteProgram(handle);
 
             disposed = true;
+#pragma warning disable CA1816 // Dispose methods should call SuppressFinalize
             GC.SuppressFinalize(this);
+#pragma warning restore CA1816 // Dispose methods should call SuppressFinalize
         }
     }
 }

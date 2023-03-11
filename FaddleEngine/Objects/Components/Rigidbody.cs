@@ -1,7 +1,7 @@
 ﻿namespace FaddleEngine
 {
     [RequireComponent(typeof(Collider))]
-    public class Rigidbody : Component
+    public sealed class Rigidbody : Component
     {
         public float mass;
         public bool kinematic;

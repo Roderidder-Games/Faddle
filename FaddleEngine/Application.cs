@@ -30,8 +30,6 @@ namespace FaddleEngine
             }
         }
 
-        internal ObjectManager objectManager;
-
         /// <summary>
         /// Creates a new application.
         /// </summary>
@@ -39,8 +37,6 @@ namespace FaddleEngine
         public Application(WindowSettings windowSettings)
         {
             Instance = this;
-
-            objectManager = new ObjectManager();
 
             using (Window window = new(windowSettings))
             {
@@ -56,7 +52,7 @@ namespace FaddleEngine
 
         internal void Update()
         {
-            objectManager.Update();
+            ObjectManager.Update();
             OnUpdate();
         }
 
@@ -67,7 +63,7 @@ namespace FaddleEngine
 
         internal void Render()
         {
-            objectManager.OnRender();
+            ObjectManager.OnRender();
             OnRender();
         }
 

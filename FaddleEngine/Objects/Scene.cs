@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace FaddleEngine
 {
@@ -22,12 +18,12 @@ namespace FaddleEngine
 
         internal void Load()
         {
-            gameObjects.ForEach((g) => Application.Instance.objectManager.Add(g));
+            gameObjects.ForEach((g) => ObjectManager.Add(g));
         }
 
         internal void Unload()
         {
-            gameObjects.ForEach((g) => Application.Instance.objectManager.Remove(g));
+            gameObjects.ForEach((g) => ObjectManager.Remove(g));
         }
     }
 }

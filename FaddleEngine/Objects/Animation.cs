@@ -1,7 +1,5 @@
 ﻿using FaddleEngine.Events;
-using FaddleEngine.Graphics;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace FaddleEngine
 {
@@ -17,7 +15,7 @@ namespace FaddleEngine
         }
     }
 
-    public class Animation
+    public sealed class Animation
     {
         public delegate void OnAnimationFrame();
         public readonly FaddleEvent onAnimationFinished;

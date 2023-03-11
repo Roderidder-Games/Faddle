@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FaddleEngine
+﻿namespace FaddleEngine
 {
-    public class CircleCollider : Collider
+    public sealed class CircleCollider : Collider
     {
         public float radius;
 

@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FaddleEngine\FaddleEngine.csproj" />
-    <ProjectReference Include="..\FaddleXR\FaddleXR.csproj" />
   </ItemGroup>
 
 </Project>

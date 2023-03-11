@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace FaddleEngine
 {
-    public class GameObject
+    public sealed class GameObject
     {
         public readonly string name;
         public readonly Transform transform;
@@ -22,7 +22,7 @@ namespace FaddleEngine
             this.name = "GameObject";
             transform = Transform.Zero;
             AddComponent(transform);
-            Application.Instance.objectManager.Add(this);
+            ObjectManager.Add(this);
         }
 
         public GameObject(string name)
@@ -30,14 +30,14 @@ namespace FaddleEngine
             this.name = name;
             transform = Transform.Zero;
             AddComponent(transform);
-            Application.Instance.objectManager.Add(this);
+            ObjectManager.Add(this);
         }
 
         public GameObject(Transform transform)
         {
             this.name = "GameObject";
             this.transform = transform;
-            Application.Instance.objectManager.Add(this);
+            ObjectManager.Add(this);
         }
 
         public GameObject(string name, Transform transform)
@@ -45,7 +45,7 @@ namespace FaddleEngine
             this.name = name;
             this.transform = transform;
             AddComponent(transform);
-            Application.Instance.objectManager.Add(this);
+            ObjectManager.Add(this);
         }
 
         public GameObject(Vector3 position, Vector3 rotation, Vector3 scale)
@@ -53,7 +53,7 @@ namespace FaddleEngine
             this.name = "GameObject";
             transform = new Transform(position, rotation, scale);
             AddComponent(transform);
-            Application.Instance.objectManager.Add(this);
+            ObjectManager.Add(this);
         }
 
         public GameObject(string name, Vector3 position, Vector3 rotation, Vector3 scale)
@@ -61,7 +61,7 @@ namespace FaddleEngine
             this.name = name;
             transform = new Transform(position, rotation, scale);
             AddComponent(transform);
-            Application.Instance.objectManager.Add(this);
+            ObjectManager.Add(this);
         }
 
         public GameObject(Scene scene)
@@ -223,7 +223,7 @@ namespace FaddleEngine
         public void Unload()
         {
             components.ForEach((c) => c.OnRemove());
-            Application.Instance.objectManager.Remove(this);
+            ObjectManager.Remove(this);
         }
     }
 }

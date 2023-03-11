@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FaddleEngine
+﻿namespace FaddleEngine
 {
-    public class BoxCollider : Collider
+    public sealed class BoxCollider : Collider
     {
         public Vector2 bounds;
 

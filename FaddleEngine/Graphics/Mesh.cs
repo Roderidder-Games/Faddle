@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace FaddleEngine.Graphics
+namespace FaddleEngine
 {
-    public class Mesh
+    public sealed class Mesh
     {
         public Vertex[] vertices;
         public int[] indices;

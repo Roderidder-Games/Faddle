@@ -1,5 +1,4 @@
 ﻿using OpenTK.Mathematics;
-using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace FaddleEngine

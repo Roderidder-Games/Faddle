@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FaddleEngine.Graphics
+namespace FaddleEngine
 {
     public readonly struct VertexAttribute
     {

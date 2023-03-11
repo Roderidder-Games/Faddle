@@ -1,13 +1,6 @@
-﻿using FaddleEngine.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FaddleEngine.Graphics
+﻿namespace FaddleEngine
 {
-    public class Spritesheet
+    public sealed class Spritesheet
     {
         private readonly Texture[,] sprites;
 
@@ -52,7 +45,7 @@ namespace FaddleEngine.Graphics
                 Log.Error($"Texture width {source.size.x} is not a multiple of tile width {tileSize.x}.");
             }
 
-            source.Replace(backgroundColor, new Color(0, 0, 255, 255));
+            source.Replace(backgroundColor, new Color(0f, 0f, 0f, 0f));
 
             this.tileSize = tileSize;
 
