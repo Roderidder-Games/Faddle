@@ -5,9 +5,17 @@ namespace FaddleEngine
 {
     public static class FileSystem
     {
-        public static string ToResourcePath(string path)
+        public static string ToResourcePath(string path, bool errorIfNotExists = true)
         {
-            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", path);
+            path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", path);
+
+            if (errorIfNotExists && !File.Exists(path))
+            {
+                Log.Error($"File {path} does not exist.");
+                return "";
+            }
+
+            return path;
         }
 
         public static string LoadTextFile(string path)

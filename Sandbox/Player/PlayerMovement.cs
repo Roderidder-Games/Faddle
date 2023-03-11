@@ -26,14 +26,19 @@ namespace PolcompballFighter.Player
 
         public override void OnUpdate()
         {
+            if (!Input.GetKey(Key.A) && !Input.GetKey(Key.D)) 
+            {
+                Parent.GetComponent<Rigidbody>().linearVelocity.x = 0f;
+            }
+
             if (Input.GetKey(Key.D))
             {
-                Parent.transform.Position = new Vector3(Parent.transform.Position.x + _speed * Application.DeltaTime, Parent.transform.Position.y, Parent.transform.Position.z);
+                Parent.GetComponent<Rigidbody>().linearVelocity.x = -(_speed);
             }
 
             if (Input.GetKey(Key.A))
             {
-                Parent.transform.Position = new Vector3(Parent.transform.Position.x - _speed * Application.DeltaTime, Parent.transform.Position.y, Parent.transform.Position.z);
+                Parent.GetComponent<Rigidbody>().linearVelocity.x = _speed;
             }
         }
     }

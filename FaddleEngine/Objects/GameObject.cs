@@ -136,7 +136,7 @@ namespace FaddleEngine
 
         public bool AddComponent(Component component, bool warnIfExists = true)
         {
-            if (components.Find((c) => c.GetType() == component.GetType()) == null)
+            if (components.Find((c) => (c.GetType() == component.GetType()) || (c.GetType().BaseType == component.GetType())) == null)
             {
                 RequireComponentAttribute attrib = component.GetType().GetCustomAttribute<RequireComponentAttribute>();
                 if (attrib != null)
@@ -169,7 +169,7 @@ namespace FaddleEngine
 
         public bool TryRemoveComponent<T>() where T : Component
         {
-            Component c = components.Find((c) => c.GetType() == typeof(T));
+            Component c = components.Find((c) => (c.GetType() == typeof(T)) || (c.GetType().BaseType == typeof(T)));
 
             if (c != null)
             {
@@ -185,14 +185,14 @@ namespace FaddleEngine
             }
         }
 
-        public T GetComponent<T>() where T : Component => (T)components.Find((c) => c.GetType() == typeof(T));
-        public bool TryGetComponent<T>(out Component component) where T : Component
+        public T GetComponent<T>() where T : Component => (T)components.Find((c) => (c.GetType().BaseType == typeof(T)) || (c.GetType() == typeof(T)));
+        public bool TryGetComponent<T>(out T component) where T : Component
         {
-            Component c = components.Find((c) => c.GetType() == typeof(T));
+            Component c = components.Find((c) => (c.GetType() == typeof(T)) || (c.GetType().BaseType == typeof(T)));
 
             if (c != null)
             {
-                component = c;
+                component = c as T;
                 return true;
             }
             else
@@ -204,7 +204,7 @@ namespace FaddleEngine
 
         public bool TryGetComponent(Type type, out Component component)
         {
-            Component c = components.Find((c) => c.GetType() == type);
+            Component c = components.Find((c) => (c.GetType() == type) || (c.GetType().BaseType == type));
 
             if (c != null)
             {

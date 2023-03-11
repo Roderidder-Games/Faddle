@@ -24,6 +24,12 @@ namespace FaddleEngine
             ebo = new IndexBuffer(mesh.indices.Length, isStatic);
             ebo.SetData(mesh.indices, mesh.indices.Length);
 
+            mesh.SetRenderer(this);
+            mesh.texture?.Use(OpenTK.Graphics.OpenGL4.TextureUnit.Texture0);
+        }
+
+        internal void SetTexture()
+        {
             mesh.texture?.Use(OpenTK.Graphics.OpenGL4.TextureUnit.Texture0);
         }
 

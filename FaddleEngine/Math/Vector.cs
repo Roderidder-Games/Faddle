@@ -233,6 +233,7 @@ namespace FaddleEngine
         public static implicit operator Vector3(OpenTK.Mathematics.Vector3 a) => new(a.X, a.Y, a.Z);
         public static implicit operator Vector3(Vector2 vec) => new(vec.x, vec.y, 0f);
         public static implicit operator Vector3(Vector3Int vec) => new(vec.x, vec.y, vec.z);
+        public static implicit operator System.Numerics.Vector3(Vector3 vec) => new(vec.x, vec.y, vec.z);
 
         #endregion
 
@@ -311,6 +312,107 @@ namespace FaddleEngine
         }
 
         public static bool operator !=(Vector3Int left, Vector3Int right)
+        {
+            return !(left == right);
+        }
+    }
+
+    public struct Vector4
+    {
+        public float x, y, z, w;
+
+        public Vector4(float x, float y, float z, float w)
+        {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+            this.w = w;
+        }
+
+        #region VECTORS
+
+        public static Vector4 Zero => new(0, 0, 0, 0);
+        public static Vector4 One => new(1, 1, 1, 1);
+        public static Vector4 UnitX => new(1, 0, 0, 0);
+        public static Vector4 UnitY => new(0, 1, 0, 0);
+        public static Vector4 UnitZ => new(0, 0, 1, 0);
+        public static Vector4 UnitW => new(0, 0, 0, 1);
+
+        #endregion
+
+        #region MATH
+
+        public float Magnitude
+        {
+            get
+            {
+                return MathF.Sqrt(x * x + y * y + z * z + w * w);
+            }
+        }
+
+        public static Vector4 Normalize(Vector4 v)
+        {
+            return new Vector4(v.x / v.Magnitude, v.y / v.Magnitude, v.z / v.Magnitude, v.w / v.Magnitude);
+        }
+
+        public static float Distance(Vector4 a, Vector4 b)
+        {
+            float dx = a.x - b.x;
+            float dy = a.y - b.y;
+            float dz = a.z - b.z;
+            float dw = a.w - b.w;
+            return MathF.Sqrt(dx * dx + dy * dy + dz * dz + dw * dw);
+        }
+
+        public static float Dot(Vector4 a, Vector4 b)
+        {
+            return a.x * b.x + a.y * b.y * a.z * b.z + a.w * b.w;
+        }
+
+        public Vector4 ToRadians() => new(MathHelper.DegreesToRadians(x), MathHelper.DegreesToRadians(y), MathHelper.DegreesToRadians(z), MathHelper.DegreesToRadians(w));
+
+        #endregion
+
+        #region OPERATORS
+
+        public static Vector4 operator +(Vector4 a, Vector4 b) => new(a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w);
+        public static Vector4 operator +(Vector4 a, float b) => new(a.x + b, a.y + b, a.z + b, a.w + b);
+        public static Vector4 operator -(Vector4 a) => new(-a.x, -a.y, -a.z, -a.w);
+        public static Vector4 operator -(Vector4 a, Vector4 b) => new(a.x - b.x, a.y - b.y, a.z - b.z, a.w - b.w);
+        public static Vector4 operator -(Vector4 a, float b) => new(a.x - b, a.y - b, a.z - b, a.w - b);
+        public static Vector4 operator *(Vector4 a, Vector4 b) => new(a.x * b.x, a.y * b.y, a.z * b.z, a.w * b.w);
+        public static Vector4 operator *(Vector4 a, float b) => new(a.x * b, a.y * b, a.z * b, a.w * b);
+        public static Vector4 operator /(Vector4 a, Vector4 b) => new(a.x / b.x, a.y / b.y, a.z / b.z, a.w / b.w);
+        public static Vector4 operator /(Vector4 a, float b) => new(a.x / b, a.y / b, a.z / b, a.w / b);
+
+        public static implicit operator OpenTK.Mathematics.Vector4(Vector4 a) => new(a.x, a.y, a.z, a.w);
+        public static implicit operator Vector4(OpenTK.Mathematics.Vector4 a) => new(a.X, a.Y, a.Z, a.W);
+        public static implicit operator Vector4(Vector2 vec) => new(vec.x, vec.y, 0f, 0f);
+
+        #endregion
+
+        public override string ToString() => $"{x}, {y}, {z}, {w}";
+
+        public override bool Equals([NotNullWhen(true)] object obj)
+        {
+            if (obj is Vector4 vec)
+            {
+                return x == vec.x && y == vec.y && z == vec.z && w == vec.w;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public static bool operator ==(Vector4 left, Vector4 right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Vector4 left, Vector4 right)
         {
             return !(left == right);
         }
