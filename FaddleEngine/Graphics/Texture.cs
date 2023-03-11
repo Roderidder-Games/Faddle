@@ -2,7 +2,6 @@
 using StbImageSharp;
 using System.IO;
 using PixelFormat = OpenTK.Graphics.OpenGL4.PixelFormat;
-using FaddleEngine.Events;
 
 namespace FaddleEngine
 {
@@ -13,8 +12,6 @@ namespace FaddleEngine
         public readonly int handle;
 
         private TextureUnit unit;
-
-        private readonly ImageResult image;
 
         private Color[] texPixels;
 
@@ -31,7 +28,7 @@ namespace FaddleEngine
 
             using (Stream stream = File.OpenRead(FileSystem.ToResourcePath(path)))
             {
-                image = ImageResult.FromStream(stream, ColorComponents.RedGreenBlueAlpha);
+                ImageResult image = ImageResult.FromStream(stream, ColorComponents.RedGreenBlueAlpha);
 
                 size = new Vector2Int(image.Width, image.Height);
 

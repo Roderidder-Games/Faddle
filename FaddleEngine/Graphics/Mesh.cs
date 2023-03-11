@@ -9,7 +9,7 @@ namespace FaddleEngine
 
         public Texture texture;
 
-        private MeshRenderer renderer;
+        private MeshRenderObject renderer;
 
         public Mesh()
         {
@@ -44,7 +44,7 @@ namespace FaddleEngine
             renderer?.SetTexture();
         }
 
-        internal void SetRenderer(MeshRenderer renderer)
+        internal void SetRenderer(MeshRenderObject renderer)
         {
             this.renderer = renderer;
         }

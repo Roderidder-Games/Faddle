@@ -3,7 +3,7 @@ using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
-namespace FaddleEngine.Graphics
+namespace FaddleEngine
 {
     internal class Window : GameWindow
     {
@@ -40,8 +40,9 @@ namespace FaddleEngine.Graphics
                 MousePosition = new Vector2(0, 0);
             }
 
-            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+            GL.Enable(EnableCap.Texture2D);
             GL.Enable(EnableCap.Blend);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
             GL.Enable(EnableCap.DepthTest);
         }
 

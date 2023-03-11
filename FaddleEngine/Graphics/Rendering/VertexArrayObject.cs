@@ -1,7 +1,7 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using System;
 
-namespace FaddleEngine.Graphics
+namespace FaddleEngine
 {
     internal class VertexArrayObject : IDisposable
     {

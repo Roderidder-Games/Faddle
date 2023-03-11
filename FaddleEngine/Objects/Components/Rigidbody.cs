@@ -15,17 +15,17 @@
             linearVelocity = Vector3.Zero;
         }
 
-        public override void OnAdd()
+        internal override void OnAdd()
         {
 
         }
 
-        public override void OnRemove()
+        internal override void OnRemove()
         {
 
         }
 
-        public override void OnUpdate()
+        internal override void OnUpdate()
         {
             if (!kinematic)
             {

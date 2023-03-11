@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FaddleEngine.Events
+namespace FaddleEngine
 {
     public sealed class FaddleEvent
     {

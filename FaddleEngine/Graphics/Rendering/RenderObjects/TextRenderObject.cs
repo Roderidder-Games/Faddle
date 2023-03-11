@@ -1,7 +1,9 @@
-﻿namespace FaddleEngine
+﻿using OpenTK.Mathematics;
+using System;
+
+namespace FaddleEngine
 {
-    [RequireComponent(typeof(MeshRenderer))]
-    public sealed class TextRenderer : Component
+    internal class TextRenderObject : IDisposable
     {
         private string _text;
         public string Text
@@ -31,26 +33,21 @@
             }
         }
 
-        public TextRenderer(string text, Font font)
+        private readonly MeshRenderObject meshRenderer;
+
+        public TextRenderObject(string text, Font font)
         {
             _text = text;
             _font = font;
+            meshRenderer = new MeshRenderObject(Mesh.Square, Shader.DEFAULT, false);
         }
 
-        public override void OnAdd()
+        internal void RenderText(Matrix4 model)
         {
-            UpdateText();
+            meshRenderer.RenderMesh(model);
         }
 
-        public override void OnRemove()
-        {
-        }
-
-        public override void OnUpdate()
-        {
-        }
-
-        private void UpdateText()
+        internal void UpdateText()
         {
             int maxColumn = 0;
             int column = 0;
@@ -101,7 +98,12 @@
                 xCurrent += tileSize.x;
             }
 
-            Parent.GetComponent<MeshRenderer>().mesh.SetTexture(texture);
+            meshRenderer.mesh.SetTexture(texture);
+        }
+
+        public void Dispose()
+        {
+            meshRenderer.Dispose();
         }
     }
 }

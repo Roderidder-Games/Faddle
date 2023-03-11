@@ -3,6 +3,7 @@
     public abstract class Component
     {
         public GameObject Parent { get; private set; }
+        public Transform Transform => Parent.transform;
 
         internal bool AddParent(GameObject parent)
         {
@@ -22,16 +23,16 @@
         /// <summary>
         /// Called on the first frame on which the component inhabits the GameObject.
         /// </summary>
-        public abstract void OnAdd();
+        internal abstract void OnAdd();
         /// <summary>
         /// Called every frame the component has a parent GameObject.
         /// </summary>
-        public abstract void OnUpdate();
+        internal abstract void OnUpdate();
         /// <summary>
         /// Called right before the component is removed from it's parent GameObject.
         /// </summary>
-        public abstract void OnRemove();
-        public virtual void OnRender()
+        internal abstract void OnRemove();
+        internal virtual void OnRender()
         {
 
         }

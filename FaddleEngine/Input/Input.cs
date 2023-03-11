@@ -8,6 +8,19 @@ namespace FaddleEngine
 
         public static Vector2 MousePos { get; private set; }
 
+        private static FaddleEvent<Mouse> _onMouseButtonDown = new();
+        public static FaddleEvent<Mouse> OnMouseButtonDown
+        {
+            get => _onMouseButtonDown;
+            private set => _onMouseButtonDown = value;
+        }
+        private static FaddleEvent<Mouse> _onMouseButtonUp = new();
+        public static FaddleEvent<Mouse> OnMouseButtonUp
+        {
+            get => _onMouseButtonUp;
+            private set => _onMouseButtonUp = value;
+        }
+
         private readonly static bool[] mouseButtonsHeld = new bool[5];
         private readonly static bool[] mouseButtonsDown = new bool[5];
         private readonly static bool[] mouseButtonsUp = new bool[5];
@@ -33,12 +46,14 @@ namespace FaddleEngine
         internal static void MouseButtonDown(MouseButton button)
         {
             mouseButtonsHeld[(int)button] = mouseButtonsDown[(int)button] = true;
+            _onMouseButtonDown.Fire((Mouse)button);
         }
 
         internal static void MouseButtonUp(MouseButton button)
         {
             mouseButtonsHeld[(int)button] = false;
             mouseButtonsUp[(int)button] = true;
+            _onMouseButtonUp.Fire((Mouse)button);
         }
 
         /// <summary>

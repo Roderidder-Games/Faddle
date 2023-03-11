@@ -1,5 +1,4 @@
-﻿using FaddleEngine.Events;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -216,6 +215,20 @@ namespace FaddleEngine
                 component = null;
                 return false;
             }
+        }
+
+        #endregion
+
+        #region UTILITY METHODS
+
+        public bool MouseOver()
+        {
+            bool minX = Input.MousePos.x >= transform.Position.x - transform.Scale.x / 2;
+            bool maxX = Input.MousePos.x <= transform.Position.x + transform.Scale.x / 2;
+            bool minY = Input.MousePos.y >= transform.Position.y - transform.Scale.y / 2;
+            bool maxY = Input.MousePos.y <= transform.Position.y + transform.Scale.y / 2;
+
+            return minX && maxX && minY && maxY;
         }
 
         #endregion

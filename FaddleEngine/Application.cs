@@ -1,6 +1,4 @@
-﻿using FaddleEngine.Graphics;
-
-namespace FaddleEngine
+﻿namespace FaddleEngine
 {
     [LogName("Application")]
     public abstract class Application

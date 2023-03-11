@@ -1,19 +1,51 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	<TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
 
+	<PropertyGroup>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Title>Faddle</Title>
+		<Company></Company>
+		<Authors>Goreo</Authors>
+		<Description>Faddle is a no bloat game engine, designed for both 3D and 2D usage.</Description>
+		<Copyright>MIT License</Copyright>
+		<RepositoryUrl>https://github.com/Goreeeo/Faddle</RepositoryUrl>
+		<PackageTags>Game Engine; OpenTK; Graphics; 3D; 2D</PackageTags>
+		<IncludeSymbols>False</IncludeSymbols>
+	</PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="OpenTK" Version="4.7.7" />
-    <PackageReference Include="StbImageSharp" Version="2.27.13" />
-    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+	<PackageReference Include="OpenTK" Version="4.7.7" />
+	<PackageReference Include="StbImageSharp" Version="2.27.13" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Physics\" />
-    <Folder Include="UI\" />
+	<Folder Include="Physics\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+	<None Update="LICENSE">
+	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  <Pack>True</Pack>
+	  <PackagePath>\</PackagePath>
+	</None>
+	<None Update="README.md">
+	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</None>
   </ItemGroup>
 
 </Project>

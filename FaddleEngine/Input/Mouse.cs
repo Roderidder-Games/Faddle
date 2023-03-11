@@ -1,5 +1,6 @@
 ﻿namespace FaddleEngine
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1069:Enums values should not be duplicated", Justification = "<Pending>")]
     public enum Mouse
     {
         Left = 0,
