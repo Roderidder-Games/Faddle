@@ -3,13 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FaddleEngine", "FaddleEngine\FaddleEngine.csproj", "{8CDDD865-6C5E-43C4-87B1-29B481393965}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PolcompballFighter", "PolcompballFighter\PolcompballFighter.csproj", "{7CF05FE3-7CB4-40D5-A4D6-702172A60DB0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PolcompballFighterModding", "PolcompballFighterModding\PolcompballFighterModding.csproj", "{488FC802-7CC2-46A4-A297-347840265500}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sandbox", "Sandbox\Sandbox.csproj", "{AE886E30-F787-4941-94A6-DA33C3618BB3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FaddleEngine", "FaddleEngine\FaddleEngine.csproj", "{8CDDD865-6C5E-43C4-87B1-29B481393965}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,14 +17,6 @@ Global
 		{8CDDD865-6C5E-43C4-87B1-29B481393965}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8CDDD865-6C5E-43C4-87B1-29B481393965}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8CDDD865-6C5E-43C4-87B1-29B481393965}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7CF05FE3-7CB4-40D5-A4D6-702172A60DB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7CF05FE3-7CB4-40D5-A4D6-702172A60DB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7CF05FE3-7CB4-40D5-A4D6-702172A60DB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7CF05FE3-7CB4-40D5-A4D6-702172A60DB0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{488FC802-7CC2-46A4-A297-347840265500}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{488FC802-7CC2-46A4-A297-347840265500}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{488FC802-7CC2-46A4-A297-347840265500}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{488FC802-7CC2-46A4-A297-347840265500}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AE886E30-F787-4941-94A6-DA33C3618BB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AE886E30-F787-4941-94A6-DA33C3618BB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE886E30-F787-4941-94A6-DA33C3618BB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
