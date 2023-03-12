@@ -17,7 +17,7 @@
 
             if (source.size.y % tileSize.y != 0)
             {
-                Log.Error($"Texture width {source.size.x} is not a multiple of tile width {tileSize.x}.");
+                Log.Error($"Texture height {source.size.y} is not a multiple of tile height {tileSize.y}.");
             }
 
             this.tileSize = tileSize;
@@ -42,7 +42,7 @@
 
             if (source.size.y % tileSize.y != 0)
             {
-                Log.Error($"Texture width {source.size.x} is not a multiple of tile width {tileSize.x}.");
+                Log.Error($"Texture height {source.size.y} is not a multiple of tile height {tileSize.y}.");
             }
 
             source.Replace(backgroundColor, new Color(0f, 0f, 0f, 0f));

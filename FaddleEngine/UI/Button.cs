@@ -1,4 +1,6 @@
-﻿namespace FaddleEngine
+﻿using OpenTK.Mathematics;
+
+namespace FaddleEngine
 {
     public sealed class Button : Component
     {
@@ -77,7 +79,7 @@
 
         internal override void OnRender()
         {
-            backgroundRenderer.RenderMesh(Transform.Model);
+            backgroundRenderer.RenderMesh(Transform.Model * Matrix4.CreateTranslation(0f, 0f, -0.001f));
             textRenderer.RenderText(Transform.Model);
         }
 

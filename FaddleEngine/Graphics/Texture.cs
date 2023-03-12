@@ -1,5 +1,6 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using StbImageSharp;
+using System.Drawing;
 using System.IO;
 using PixelFormat = OpenTK.Graphics.OpenGL4.PixelFormat;
 
@@ -17,7 +18,7 @@ namespace FaddleEngine
 
         internal FaddleEvent<Texture> onTexUpdate = new();
 
-        public Texture(string path)
+        public Texture(string path, bool point = false)
         {
             handle = GL.GenTexture();
 
@@ -35,8 +36,8 @@ namespace FaddleEngine
                 GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, image.Width, image.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, image.Data);
             };
 
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, point ? (int)TextureMinFilter.Nearest : (int)TextureMinFilter.Linear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, point ? (int)TextureMagFilter.Nearest : (int)TextureMagFilter.Linear);
 
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Repeat);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
@@ -44,7 +45,7 @@ namespace FaddleEngine
             GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
         }
         
-        public Texture(Color[] pixels, int width)
+        public Texture(Color[] pixels, int width, bool point = false)
         {
             if (pixels.Length % width != 0)
             {
@@ -75,8 +76,8 @@ namespace FaddleEngine
 
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, size.x, size.y, 0, PixelFormat.Rgba, PixelType.UnsignedByte, data);
 
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, point ? (int)TextureMinFilter.Nearest : (int)TextureMinFilter.Linear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, point ? (int)TextureMagFilter.Nearest : (int)TextureMagFilter.Linear);
 
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Repeat);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
