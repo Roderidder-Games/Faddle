@@ -51,14 +51,20 @@ namespace FaddleEngine
             set => textRenderer.Text = value;
         }
 
-        public Button(string text, Font font, Texture backgroundImage, bool enabled = true)
+        public Color TextColor
+        {
+            get => textRenderer.TextColor;
+            set => textRenderer.TextColor = value;
+        }
+
+        public Button(string text, Font font, Color textColor, Texture backgroundImage, bool enabled = true)
         {
             this.enabled = enabled;
             Input.OnMouseButtonDown.AddListener(MouseClicked);
             Input.OnMouseButtonUp.AddListener(MouseReleased);
             backgroundRenderer = new MeshRenderObject(Mesh.Square, Shader.DEFAULT, false);
             BackgroundImage = backgroundImage;
-            textRenderer = new TextRenderObject(text, font);
+            textRenderer = new TextRenderObject(text, font, textColor);
         }
 
         internal override void OnAdd()

@@ -1,10 +1,22 @@
-﻿namespace FaddleEngine
+﻿using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+
+namespace FaddleEngine
 {
     [LogName("Application")]
-    public abstract class Application
+    public abstract partial class Application
     {
+        [LibraryImport("kernel32.dll")]
+        private static partial IntPtr GetConsoleWindow();
+
+        [LibraryImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static partial bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        private const int SW_HIDE = 0;
+
         public static Vector2Int WindowSize { get; internal set; }
-        public static float DeltaTime { get; internal set; }
 
         internal static Application _instance;
         internal static Application Instance
@@ -15,7 +27,7 @@
                 {
                     return _instance;
                 }
-                throw new System.Exception("Could not find instance of application.");
+                throw new Exception("Could not find instance of application.");
             }
             private set
             {
@@ -24,7 +36,7 @@
                     _instance = value;
                     return;
                 }
-                throw new System.Exception("Application already exists, cannot create a second instance.");
+                throw new Exception("Application already exists, cannot create a second instance.");
             }
         }
 
@@ -34,6 +46,8 @@
         /// <param name="windowSettings">The settings for the window.</param>
         public Application(WindowSettings windowSettings)
         {
+            TriggerConsole();
+
             Instance = this;
 
             using (Window window = new(windowSettings))
@@ -41,6 +55,12 @@
                 OnStart();
                 window.Run();
             };
+        }
+
+        [Conditional("RELEASE")]
+        private static void TriggerConsole()
+        {
+            ShowWindow(GetConsoleWindow(), SW_HIDE);
         }
 
         /// <summary>
@@ -76,6 +96,8 @@
         public static void Quit()
         {
             Window.Quit();
+            Environment.Exit(0);
+            
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using StbImageSharp;
-using System.Drawing;
+using System.Collections.Generic;
 using System.IO;
 using PixelFormat = OpenTK.Graphics.OpenGL4.PixelFormat;
 
@@ -8,6 +8,8 @@ namespace FaddleEngine
 {
     public sealed class Texture
     {
+        private static readonly List<Texture> textures = new();
+
         public readonly Vector2Int size;
 
         public readonly int handle;
@@ -18,8 +20,12 @@ namespace FaddleEngine
 
         internal FaddleEvent<Texture> onTexUpdate = new();
 
+        private readonly bool point = false;
+
         public Texture(string path, bool point = false)
         {
+            this.point = point;
+
             handle = GL.GenTexture();
 
             GL.ActiveTexture(TextureUnit.Texture0);
@@ -43,6 +49,8 @@ namespace FaddleEngine
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
 
             GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
+
+            textures.Add(this);
         }
         
         public Texture(Color[] pixels, int width, bool point = false)
@@ -83,6 +91,18 @@ namespace FaddleEngine
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
 
             GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
+
+            textures.Add(this);
+        }
+
+        public Texture Copy()
+        {
+            if (texPixels == null)
+            {
+                InitializePixels();
+            }
+
+            return new Texture(texPixels, size.x, point);
         }
 
         public void Replace(Color source, Color target)
@@ -225,6 +245,11 @@ namespace FaddleEngine
             this.unit = unit;
             GL.ActiveTexture(unit);
             GL.BindTexture(TextureTarget.Texture2D, handle);
+        }
+
+        internal static void DisposeAll()
+        {
+            textures.ForEach(tex => tex.Dispose());
         }
 
         internal void Dispose()

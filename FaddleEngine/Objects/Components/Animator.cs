@@ -20,7 +20,7 @@
             animation.Update(Parent.GetComponent<MeshRenderer>().renderer.mesh);
         }
 
-        internal void Play(Animation animation)
+        public void Play(Animation animation)
         {
             animation.OnPlay(Parent.GetComponent<MeshRenderer>().renderer.mesh);
             this.animation = animation;

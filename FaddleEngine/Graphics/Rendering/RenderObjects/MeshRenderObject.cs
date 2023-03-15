@@ -34,7 +34,9 @@ namespace FaddleEngine
             vao.Use();
 
             shader.Use();
+
             mesh.texture?.Use(OpenTK.Graphics.OpenGL4.TextureUnit.Texture0);
+
             shader.SetUniform("model", model);
             shader.SetUniform("view", Camera.Main.GetViewMatrix());
             shader.SetUniform("projection", Camera.Main.GetProjectionMatrix());

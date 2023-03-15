@@ -15,15 +15,19 @@ namespace FaddleEngine
             new GameWindowSettings { RenderFrequency = 60f, UpdateFrequency = 60f },
             new NativeWindowSettings
             {
-                WindowState = settings.Fullscreen ? OpenTK.Windowing.Common.WindowState.Fullscreen : OpenTK.Windowing.Common.WindowState.Normal,
+                WindowState = settings.Fullscreen ? WindowState.Fullscreen : WindowState.Normal,
                 Title = settings.Title,
                 Size = settings.Size,
                 APIVersion = new System.Version(4, 0),
-                StartVisible = false
+                StartVisible = false,
+                NumberOfSamples = 4,
             })
         {
             this.settings = settings;
-            CenterWindow();
+            if (!settings.Fullscreen)
+            {
+                CenterWindow();
+            }
             Application.WindowSize = Size;
             window = this;
         }
@@ -44,6 +48,7 @@ namespace FaddleEngine
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
             GL.Enable(EnableCap.DepthTest);
+            GL.Enable(EnableCap.Multisample);
         }
 
         protected override void OnResize(ResizeEventArgs e)
@@ -51,6 +56,8 @@ namespace FaddleEngine
             base.OnResize(e);
 
             GL.Viewport(0, 0, e.Width, e.Height);
+
+            Application.WindowSize = Size;
         }
 
         protected override void OnRenderFrame(FrameEventArgs args)
@@ -76,7 +83,7 @@ namespace FaddleEngine
                 CursorState = CursorState.Normal;
             }
 
-            Application.DeltaTime = (float)args.Time;
+            Time.DeltaTime = (float)args.Time;
 
             Input.Update(KeyboardState);
             Input.UpdateMousePos(MouseState.Position);
@@ -124,6 +131,8 @@ namespace FaddleEngine
             Shader.DEFAULT.Dispose();
 
             PackageManager.OnQuit();
+
+            Texture.DisposeAll();
         }
 
         public static Vector2Int GetSize() => new(window.Size.X, window.Size.Y);

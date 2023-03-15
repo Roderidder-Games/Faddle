@@ -1,11 +1,27 @@
 ﻿using OpenTK.Mathematics;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FaddleEngine
 {
     public sealed class Camera
     {
-        public static Camera Main { get; private set; }
+        private static Camera _main;
+        public static Camera Main
+        {
+            get
+            {
+                if (_main == null)
+                {
+                    Log.Error("No active Camera, please instantiate a camera in the OnStart method.");
+                }
+                return _main;
+            }
+            private set
+            {
+                _main = value;
+            }
+        }
 
         public Vector3 Position { get; set; }
         public float AspectRatio { get; set; }
@@ -57,12 +73,18 @@ namespace FaddleEngine
             Position = position;
             AspectRatio = aspectRatio;
 
-            Main ??= this;
+            _main ??= this;
         }
 
         public static void SetMain(Camera camera)
         {
-            Main = camera;
+            if (camera == null)
+            {
+                Log.Warn("Attempted to pass null into Camera.SetMain.");
+                return;
+            }
+
+            _main = camera;
         }
 
         public Matrix4 GetViewMatrix()

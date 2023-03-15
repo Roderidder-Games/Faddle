@@ -7,6 +7,7 @@ namespace FaddleEngine
         private static KeyboardState keyboard;
 
         public static Vector2 MousePos { get; private set; }
+        public static Vector2 MousePosNormalized { get; private set; }
 
         private static FaddleEvent<Mouse> _onMouseButtonDown = new();
         public static FaddleEvent<Mouse> OnMouseButtonDown
@@ -41,6 +42,9 @@ namespace FaddleEngine
         internal static void UpdateMousePos(Vector2 mousePos)
         {
             MousePos = mousePos;
+            float x = (2f * mousePos.x) / Application.WindowSize.x - 1f;
+            float y = 1f - (2f * mousePos.y) / Application.WindowSize.y;
+            MousePosNormalized = new Vector2(x, y);
         }
 
         internal static void MouseButtonDown(MouseButton button)

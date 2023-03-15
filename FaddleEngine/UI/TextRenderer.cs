@@ -16,9 +16,15 @@
             set => textRenderer.Font = value;
         }
 
-        public TextRenderer(string text, Font font)
+        public Color TextColor
         {
-            textRenderer = new TextRenderObject(text, font);
+            get => textRenderer.TextColor;
+            set => textRenderer.TextColor = value;
+        }
+
+        public TextRenderer(string text, Font font, Color textColor)
+        {
+            textRenderer = new TextRenderObject(text, font, textColor);
         }
 
         internal override void OnAdd()

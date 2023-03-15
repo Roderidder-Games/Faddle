@@ -33,12 +33,27 @@ namespace FaddleEngine
             }
         }
 
+        private Color _textColor;
+        public Color TextColor
+        {
+            get
+            {
+                return _textColor;
+            }
+            set
+            {
+                _textColor = value;
+                UpdateText();
+            }
+        }
+
         private readonly MeshRenderObject meshRenderer;
 
-        public TextRenderObject(string text, Font font)
+        public TextRenderObject(string text, Font font, Color textColor)
         {
             _text = text;
             _font = font;
+            _textColor = textColor;
             meshRenderer = new MeshRenderObject(Mesh.Square, Shader.DEFAULT, false);
         }
 
@@ -93,7 +108,10 @@ namespace FaddleEngine
                     yCurrent += tileSize.y;
                 }
 
-                texture.SetPixels(new Vector2Int(xCurrent, yCurrent), new Vector2Int(tileSize.x, tileSize.y), _font.GetTexture(_text[i]).GetPixels());
+                Texture tex = _font.GetTexture(_text[i]).Copy();
+                tex.Replace(Color.White, TextColor);
+
+                texture.SetPixels(new Vector2Int(xCurrent, yCurrent), new Vector2Int(tileSize.x, tileSize.y), tex.GetPixels());
 
                 xCurrent += tileSize.x;
             }
