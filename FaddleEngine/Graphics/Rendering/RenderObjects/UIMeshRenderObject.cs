@@ -1,9 +1,10 @@
-﻿using OpenTK.Mathematics;
+﻿using OpenTK.Graphics.OpenGL4;
+using OpenTK.Mathematics;
 using System;
 
 namespace FaddleEngine
 {
-    internal class MeshRenderObject : IDisposable, IRenderer
+    internal class UIMeshRenderObject : IDisposable, IRenderer
     {
         public Mesh mesh;
         public Shader shader;
@@ -12,13 +13,11 @@ namespace FaddleEngine
         private readonly IndexBuffer ebo;
         private readonly VertexArrayObject vao;
 
-        private readonly Camera camera;
-
         private readonly int zIndex;
 
         private Matrix4 model;
 
-        public MeshRenderObject(Mesh mesh, Shader shader, bool isStatic, Camera camera, int zIndex)
+        public UIMeshRenderObject(Mesh mesh, Shader shader, bool isStatic, int zIndex)
         {
             this.mesh = mesh;
             this.shader = shader;
@@ -31,14 +30,9 @@ namespace FaddleEngine
 
             ebo = new IndexBuffer(mesh.indices.Length, isStatic);
             ebo.SetData(mesh.indices, mesh.indices.Length);
-
-            this.camera = camera ?? Camera.Main;
         }
 
-        public int GetZIndex()
-        {
-            return zIndex;
-        }
+        public int GetZIndex() => zIndex;
 
         public void SetModel(Matrix4 model)
         {
@@ -50,12 +44,11 @@ namespace FaddleEngine
             vao.Use();
 
             shader.Use();
-
-            mesh.texture?.Use(OpenTK.Graphics.OpenGL4.TextureUnit.Texture0);
-
             shader.SetUniform("model", model);
-            shader.SetUniform("view", camera.GetViewMatrix());
-            shader.SetUniform("projection", camera.GetProjectionMatrix());
+            shader.SetUniform("projection", Camera.UI.GetProjectionMatrix());
+            shader.SetUniform("view", Camera.UI.GetViewMatrix());
+
+            mesh.texture?.Use(TextureUnit.Texture0);
 
             ebo.Use();
         }

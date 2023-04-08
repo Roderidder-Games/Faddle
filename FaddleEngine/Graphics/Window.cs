@@ -30,6 +30,12 @@ namespace FaddleEngine
             }
             Application.WindowSize = Size;
             window = this;
+
+            Camera uiCam = new(Vector3.UnitZ * 3, Size.X / (float)Size.Y)
+            {
+                Yaw = -90f
+            };
+            Camera.SetUI(uiCam);
         }
 
         protected override void OnLoad()
@@ -128,7 +134,7 @@ namespace FaddleEngine
         {
             base.OnUnload();
 
-            Shader.DEFAULT.Dispose();
+            Shader.TEXTURE.Dispose();
 
             PackageManager.OnQuit();
 

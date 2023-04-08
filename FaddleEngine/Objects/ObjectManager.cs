@@ -4,26 +4,26 @@ namespace FaddleEngine
 {
     internal static class ObjectManager
     {
-        private static readonly List<GameObject> gameObjects = new();
+        private static readonly List<IObject> objects = new();
 
-        public static void Add(GameObject gameObject)
+        public static void Add(IObject @object)
         {
-            gameObjects.Add(gameObject);
+            objects.Add(@object);
         }
 
-        public static void Remove(GameObject gameObject)
+        public static void Remove(IObject @object)
         {
-            gameObjects.Remove(gameObject);
+            objects.Remove(@object);
         }
 
         public static void OnRender()
         {
-            gameObjects.ForEach((g) => g.OnRender());
+            objects.ForEach((g) => g.OnRender());
         }
 
         public static void Update()
         {
-            gameObjects.ForEach((g) => g.Update());
+            objects.ForEach((g) => g.Update());
         }
     }
 }

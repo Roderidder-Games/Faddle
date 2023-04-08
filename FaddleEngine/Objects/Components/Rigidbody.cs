@@ -1,23 +1,30 @@
-﻿namespace FaddleEngine
+﻿using OpenTK.Mathematics;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FaddleEngine
 {
-    [RequireComponent(typeof(Collider))]
-    public sealed class Rigidbody : Component
+    public class Rigidbody : Component
     {
-        public float mass;
-        public bool kinematic;
+        public Shape shape;
 
-        public Vector3 linearVelocity;
+        public Vector3 velocity;
+        public Vector3 angularVelocity;
 
-        public Rigidbody(float mass, bool kinematic)
+        public float gravity;
+
+        public Rigidbody(Shape shape, float gravity = -1f)
         {
-            this.mass = mass;
-            this.kinematic = kinematic;
-            linearVelocity = Vector3.Zero;
+            this.shape = shape;
+            this.gravity = gravity;
         }
 
         internal override void OnAdd()
         {
-
+            velocity.y = gravity;
         }
 
         internal override void OnRemove()
@@ -27,10 +34,9 @@
 
         internal override void OnUpdate()
         {
-            if (!kinematic)
-            {
-
-            }
+            Transform.Position += velocity;
+            Quaternion rot = Quaternion.FromEulerAngles(angularVelocity);
+            Transform.Rotation += rot;
         }
     }
 }

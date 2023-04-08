@@ -97,7 +97,6 @@ namespace FaddleEngine
         {
             Window.Quit();
             Environment.Exit(0);
-            
         }
     }
 }

@@ -2,37 +2,9 @@
 
 namespace FaddleEngine
 {
-    public sealed class Button : Component
+    public sealed class Button : UIElement
     {
         public bool enabled;
-
-        private FaddleEvent _onLeftMouseButtonDown = new();
-        public FaddleEvent OnLeftMouseButtonDown
-        {
-            get => _onLeftMouseButtonDown;
-            private set => _onLeftMouseButtonDown = value;
-        }
-
-        private FaddleEvent _onLeftMouseButtonUp = new();
-        public FaddleEvent OnLeftMouseButtonUp
-        {
-            get => _onLeftMouseButtonUp;
-            private set => _onLeftMouseButtonUp = value;
-        }
-
-        private FaddleEvent _onRightMouseButtonDown = new();
-        public FaddleEvent OnRightMouseButtonDown
-        {
-            get => _onRightMouseButtonDown;
-            private set => _onRightMouseButtonDown = value;
-        }
-
-        private FaddleEvent _onRightMouseButtonUp = new();
-        public FaddleEvent OnRightMouseButtonUp
-        {
-            get => _onRightMouseButtonUp;
-            private set => _onRightMouseButtonUp = value;
-        }
 
         public Texture BackgroundImage
         {
@@ -40,10 +12,8 @@ namespace FaddleEngine
             set => backgroundRenderer.mesh.SetTexture(value);
         }
 
-        private readonly TextRenderObject textRenderer;
-        private readonly MeshRenderObject backgroundRenderer;
-
-        private bool clicked = false;
+        private readonly UITextRenderObject textRenderer;
+        private readonly UIMeshRenderObject backgroundRenderer;
 
         public string Text
         {
@@ -57,14 +27,12 @@ namespace FaddleEngine
             set => textRenderer.TextColor = value;
         }
 
-        public Button(string text, Font font, Color textColor, Texture backgroundImage, bool enabled = true)
+        public Button(string text, Transform transform, Font font, Color textColor, Texture backgroundImage, bool enabled = true) : base(transform)
         {
             this.enabled = enabled;
-            Input.OnMouseButtonDown.AddListener(MouseClicked);
-            Input.OnMouseButtonUp.AddListener(MouseReleased);
-            backgroundRenderer = new MeshRenderObject(Mesh.Square, Shader.DEFAULT, false);
+            backgroundRenderer = new UIMeshRenderObject(Mesh.Square, Shader.TEXTURE, false, (int)Transform.Position.z);
             BackgroundImage = backgroundImage;
-            textRenderer = new TextRenderObject(text, font, textColor);
+            textRenderer = new UITextRenderObject(text, font, textColor, (int)Transform.Position.z);
         }
 
         internal override void OnAdd()
@@ -85,46 +53,10 @@ namespace FaddleEngine
 
         internal override void OnRender()
         {
-            backgroundRenderer.RenderMesh(Transform.Model * Matrix4.CreateTranslation(0f, 0f, -0.001f));
-            textRenderer.RenderText(Transform.Model);
-        }
-
-        private void MouseClicked(Mouse button)
-        {
-            if (!enabled) return;
-
-            if (clicked) return;
-
-            if (!Parent.MouseOver()) return;
-
-            clicked = true;
-
-            if (button == Mouse.Left)
-            {
-                _onLeftMouseButtonDown.Fire();
-            }
-            else if (button == Mouse.Right)
-            {
-                _onRightMouseButtonDown.Fire();
-            }
-        }
-
-        private void MouseReleased(Mouse button)
-        {
-            if (!enabled) return;
-
-            if (!clicked) return;
-
-            clicked = false;
-
-            if (button == Mouse.Left)
-            {
-                _onLeftMouseButtonUp.Fire();
-            }
-            else if (button == Mouse.Right)
-            {
-                _onRightMouseButtonUp.Fire();
-            }
+            backgroundRenderer.SetModel(Transform.Model);
+            textRenderer.SetModel(Transform.Model);
+            backgroundRenderer.Render();
+            textRenderer.Render();
         }
     }
 }

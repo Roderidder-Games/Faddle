@@ -51,6 +51,8 @@ namespace FaddleEngine
             GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
 
             textures.Add(this);
+
+            GL.BindTexture(TextureTarget.Texture2D, 0);
         }
         
         public Texture(Color[] pixels, int width, bool point = false)
@@ -93,6 +95,8 @@ namespace FaddleEngine
             GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
 
             textures.Add(this);
+
+            GL.BindTexture(TextureTarget.Texture2D, 0);
         }
 
         public Texture Copy()
@@ -144,6 +148,8 @@ namespace FaddleEngine
             }
 
             GL.TexSubImage2D(TextureTarget.Texture2D, 0, 0, 0, size.x, size.y, PixelFormat.Rgba, PixelType.UnsignedByte, data);
+
+            GL.BindTexture(TextureTarget.Texture2D, 0);
         }
 
         private void InitializePixels()
@@ -177,6 +183,8 @@ namespace FaddleEngine
             }
 
             onTexUpdate.Fire(this);
+
+            GL.BindTexture(TextureTarget.Texture2D, 0);
         }
 
         public Color[] GetPixels(bool clear = false)
@@ -218,6 +226,8 @@ namespace FaddleEngine
 
                 index++;
             }
+
+            GL.BindTexture(TextureTarget.Texture2D, 0);
 
             return pixelsArray;
         }

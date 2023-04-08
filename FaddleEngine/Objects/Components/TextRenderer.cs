@@ -22,9 +22,9 @@
             set => textRenderer.TextColor = value;
         }
 
-        public TextRenderer(string text, Font font, Color textColor)
+        public TextRenderer(string text, Font font, Color textColor, int zIndex = 0, Camera camera = null)
         {
-            textRenderer = new TextRenderObject(text, font, textColor);
+            textRenderer = new TextRenderObject(text, font, textColor, camera, zIndex);
         }
 
         internal override void OnAdd()
@@ -43,7 +43,8 @@
 
         internal override void OnRender()
         {
-            textRenderer.RenderText(Transform.Model);
+            textRenderer.SetModel(Transform.Model);
+            textRenderer.Render();
         }
     }
 }

@@ -3,7 +3,7 @@ using System;
 
 namespace FaddleEngine
 {
-    internal class TextRenderObject : IDisposable, IRenderer
+    internal class UITextRenderObject : IDisposable, IRenderer
     {
         private string _text;
         public string Text
@@ -47,14 +47,14 @@ namespace FaddleEngine
             }
         }
 
-        private readonly MeshRenderObject meshRenderer;
+        private readonly UIMeshRenderObject meshRenderer;
 
-        public TextRenderObject(string text, Font font, Color textColor, Camera camera, int zIndex)
+        public UITextRenderObject(string text, Font font, Color textColor, int zIndex)
         {
             _text = text;
             _font = font;
             _textColor = textColor;
-            meshRenderer = new MeshRenderObject(Mesh.Square, Shader.TEXTURE, false, camera, zIndex);
+            meshRenderer = new UIMeshRenderObject(Mesh.Square, Shader.TEXTURE, false, zIndex);
         }
 
         public int GetZIndex() => meshRenderer.GetZIndex();

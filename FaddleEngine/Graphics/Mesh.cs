@@ -9,14 +9,11 @@ namespace FaddleEngine
 
         public Texture texture;
 
-        private MeshRenderObject renderer;
-
         public Mesh()
         {
             vertices = Array.Empty<Vertex>();
             indices = Array.Empty<int>();
             texture = null;
-            renderer = null;
         }
 
         public Mesh(Vertex[] vertices, int[] indices, Texture texture = null)
@@ -25,7 +22,6 @@ namespace FaddleEngine
             this.indices = indices;
             this.texture = texture;
             texture?.onTexUpdate.AddListener(SetTexture);
-            renderer = null;
         }
 
         public void SetVertices(Vertex[] vertices)
@@ -41,12 +37,6 @@ namespace FaddleEngine
         public void SetTexture(Texture texture)
         {
             this.texture = texture;
-            renderer?.SetTexture();
-        }
-
-        internal void SetRenderer(MeshRenderObject renderer)
-        {
-            this.renderer = renderer;
         }
 
         public static Mesh Cube =>

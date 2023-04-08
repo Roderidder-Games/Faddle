@@ -4,26 +4,26 @@ namespace FaddleEngine
 {
     public abstract class Scene
     {
-        private readonly List<GameObject> gameObjects;
+        private readonly List<IObject> objects;
 
         public Scene()
         {
-            gameObjects = new List<GameObject>();
+            objects = new List<IObject>();
         }
 
-        public void Add(GameObject gameObject)
+        public void Add(IObject @object)
         {
-            gameObjects.Add(gameObject);
+            objects.Add(@object);
         }
 
         internal void Load()
         {
-            gameObjects.ForEach((g) => ObjectManager.Add(g));
+            objects.ForEach(ObjectManager.Add);
         }
 
         internal void Unload()
         {
-            gameObjects.ForEach((g) => ObjectManager.Remove(g));
+            objects.ForEach(ObjectManager.Remove);
         }
     }
 }

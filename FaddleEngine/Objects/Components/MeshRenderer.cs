@@ -5,9 +5,9 @@
 
         internal readonly MeshRenderObject renderer;
 
-        public MeshRenderer(Mesh mesh, Shader shader, bool isStatic = true)
+        public MeshRenderer(Mesh mesh, Shader shader, int zIndex = 0, bool isStatic = true, Camera camera = null)
         {
-            renderer = new MeshRenderObject(mesh, shader, isStatic);
+            renderer = new MeshRenderObject(mesh, shader, isStatic, camera, zIndex);
         }
 
         internal override void OnAdd()
@@ -25,7 +25,8 @@
 
         internal override void OnRender()
         {
-            renderer.RenderMesh(Parent.transform.Model);
+            renderer.SetModel(Parent.transform.Model);
+            renderer.Render();
         }
     }
 }

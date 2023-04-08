@@ -18,7 +18,7 @@
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<FileVersion></FileVersion>
 		<AssemblyVersion></AssemblyVersion>
-		<Version>0.1.4</Version>
+		<Version>0.2.2</Version>
 	</PropertyGroup>
 
   <ItemGroup>
@@ -37,10 +37,6 @@
 	<None Update="README.md">
 	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	</None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Physics\" />
   </ItemGroup>
 
 </Project>

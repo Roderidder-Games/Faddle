@@ -35,7 +35,8 @@ namespace FaddleEngine
     public sealed class Shader
     {
         public readonly int handle;
-        public static Shader DEFAULT => new("Default/Shaders/Texture.vert", "Default/Shaders/Texture.frag");
+        public static Shader TEXTURE => new("Default/Shaders/Texture.vert", "Default/Shaders/Texture.frag");
+        public static Shader UI => new("Default/Shaders/Texture.vert", "Default/Shaders/Texture.frag");
 
         private readonly ShaderUniform[] uniforms;
         private readonly ShaderAttribute[] attributes;

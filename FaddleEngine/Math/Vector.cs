@@ -234,6 +234,7 @@ namespace FaddleEngine
         public static implicit operator Vector3(Vector2 vec) => new(vec.x, vec.y, 0f);
         public static implicit operator Vector3(Vector3Int vec) => new(vec.x, vec.y, vec.z);
         public static implicit operator System.Numerics.Vector3(Vector3 vec) => new(vec.x, vec.y, vec.z);
+        public static implicit operator Vector3(System.Numerics.Vector3 vec) => new(vec.X, vec.Y, vec.Z);
 
         #endregion
 

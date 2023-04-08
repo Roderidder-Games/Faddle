@@ -23,6 +23,23 @@ namespace FaddleEngine
             }
         }
 
+        private static Camera _ui;
+        public static Camera UI
+        {
+            get
+            {
+                if (_ui == null)
+                {
+                    Log.Error("No active UI Camera, please instantiate a camera in the OnStart method.");
+                }
+                return _ui;
+            }
+            private set
+            {
+                _ui = value;
+            }
+        }
+
         public Vector3 Position { get; set; }
         public float AspectRatio { get; set; }
         public Vector3 Front => front;
@@ -85,6 +102,17 @@ namespace FaddleEngine
             }
 
             _main = camera;
+        }
+
+        internal static void SetUI(Camera camera)
+        {
+            if (camera == null)
+            {
+                Log.Warn("Attempted to pass null into Camera.SetUI.");
+                return;
+            }
+
+            _ui = camera;
         }
 
         public Matrix4 GetViewMatrix()

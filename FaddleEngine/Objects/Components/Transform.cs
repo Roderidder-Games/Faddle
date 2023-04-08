@@ -32,6 +32,19 @@ namespace FaddleEngine
             }
         }
 
+        public Vector3 EulerAngles
+        {
+            get
+            {
+                return _rotation.ToEulerAngles();
+            }
+            set
+            {
+                _rotation = Quaternion.FromEulerAngles(value);
+                UpdateTransformation();
+            }
+        }
+
         private Vector3 _scale;
         public Vector3 Scale
         {

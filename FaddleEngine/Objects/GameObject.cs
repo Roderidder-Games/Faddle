@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace FaddleEngine
 {
-    public sealed class GameObject
+    public sealed class GameObject : IObject
     {
         public readonly string name;
         public readonly Transform transform;
@@ -14,12 +14,15 @@ namespace FaddleEngine
         private readonly FaddleEvent onRender = new();
         private readonly FaddleEvent onUpdate = new();
 
+        public readonly bool isStatic;
+
         #region CONSTRUCTORS
 
         public GameObject()
         {
             this.name = "GameObject";
             transform = Transform.Zero;
+            isStatic = true;
             AddComponent(transform);
             ObjectManager.Add(this);
         }
@@ -28,6 +31,7 @@ namespace FaddleEngine
         {
             this.name = name;
             transform = Transform.Zero;
+            isStatic = true;
             AddComponent(transform);
             ObjectManager.Add(this);
         }
@@ -36,6 +40,7 @@ namespace FaddleEngine
         {
             this.name = "GameObject";
             this.transform = transform;
+            isStatic = true;
             ObjectManager.Add(this);
         }
 
@@ -43,6 +48,7 @@ namespace FaddleEngine
         {
             this.name = name;
             this.transform = transform;
+            isStatic = true;
             AddComponent(transform);
             ObjectManager.Add(this);
         }
@@ -51,6 +57,7 @@ namespace FaddleEngine
         {
             this.name = "GameObject";
             transform = new Transform(position, rotation, scale);
+            isStatic = true;
             AddComponent(transform);
             ObjectManager.Add(this);
         }
@@ -59,6 +66,7 @@ namespace FaddleEngine
         {
             this.name = name;
             transform = new Transform(position, rotation, scale);
+            isStatic = true;
             AddComponent(transform);
             ObjectManager.Add(this);
         }
@@ -67,6 +75,7 @@ namespace FaddleEngine
         {
             this.name = "GameObject";
             transform = Transform.Zero;
+            isStatic = true;
             AddComponent(transform);
             scene.Add(this);
         }
@@ -75,6 +84,7 @@ namespace FaddleEngine
         {
             this.name = name;
             transform = Transform.Zero;
+            isStatic = true;
             AddComponent(transform);
             scene.Add(this);
         }
@@ -83,6 +93,7 @@ namespace FaddleEngine
         {
             this.name = "GameObject";
             this.transform = transform;
+            isStatic = true;
             scene.Add(this);
         }
 
@@ -90,6 +101,7 @@ namespace FaddleEngine
         {
             this.name = name;
             this.transform = transform;
+            isStatic = true;
             AddComponent(transform);
             scene.Add(this);
         }
@@ -98,6 +110,7 @@ namespace FaddleEngine
         {
             this.name = "GameObject";
             transform = new Transform(position, rotation, scale);
+            isStatic = true;
             AddComponent(transform);
             scene.Add(this);
         }
@@ -106,6 +119,7 @@ namespace FaddleEngine
         {
             this.name = name;
             transform = new Transform(position, rotation, scale);
+            isStatic = true;
             AddComponent(transform);
             scene.Add(this);
         }
@@ -114,12 +128,12 @@ namespace FaddleEngine
 
         #region INTERNAL METHODS
 
-        internal void OnRender()
+        void IObject.OnRender()
         {
             onRender.Fire();
         }
 
-        internal void Update()
+        void IObject.Update()
         {
             onUpdate.Fire();
         }
@@ -217,19 +231,7 @@ namespace FaddleEngine
             }
         }
 
-        #endregion
-
-        #region UTILITY METHODS
-
-        public bool MouseOver()
-        {
-            bool minX = Input.MousePos.x >= transform.Position.x - transform.Scale.x / 2;
-            bool maxX = Input.MousePos.x <= transform.Position.x + transform.Scale.x / 2;
-            bool minY = Input.MousePos.y >= transform.Position.y - transform.Scale.y / 2;
-            bool maxY = Input.MousePos.y <= transform.Position.y + transform.Scale.y / 2;
-
-            return minX && maxX && minY && maxY;
-        }
+        public T[] GetAllComponents<T>() where T : Component => (T[])components.FindAll((c) => (c.GetType().BaseType == typeof(T)) || (c.GetType() == typeof(T))).ToArray();
 
         #endregion
 
